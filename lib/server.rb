@@ -1,6 +1,7 @@
 require 'data_mapper'
 require 'sinatra'
 
+
 set :views, Proc.new { File.join(root, "..", "views") }
 env = ENV["RACK_ENV"] || "development"
 #we're telling datamapper to use a postgreql database on local host. This will be "bookmark manager test" or "bookmarkmanager development" depending on the environment
@@ -17,4 +18,11 @@ DataMapper.auto_upgrade!
 get '/' do
 	@links = Link.all
 	erb :index
+end
+
+post '/links' do
+	url = params["url"]
+	title = params["title"]
+	Link.create(:url => url, :title => title)
+	redirect to ('/')
 end
