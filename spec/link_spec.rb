@@ -22,7 +22,7 @@ describe Link do
 			#if we want to, we can destroy it
 			link.destroy
 			expect(Link.count).to eq (0)
-	end
+		end
 	end
 
 end

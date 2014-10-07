@@ -10,4 +10,5 @@ property :id,    Serial #serial means that it will be auto incremented for every
 property :title, String
 property :url,   String
 
+has n, :tags, :through => Resource
 end
