@@ -1,4 +1,6 @@
 require 'rubygems'
-require File.join(File.dirname(__FILE__), 'lib/bookmarkmanager.rb')
+require File.join(File.dirname(__FILE__), 'lib/server.rb')
 
-run BookMarkManager
+require './lib/server.rb'
+
+run Sinatra::Application
