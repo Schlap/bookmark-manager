@@ -8,8 +8,10 @@ ENV["RACK_ENV"] = 'test' #becuase we need to know what database to work with
 require 'server.rb'
 require 'database_cleaner'
 
+
 require 'capybara/rspec'
 require 'sinatra'
+require 'bcrypt'
 Capybara.app = Sinatra::Application.new
 
 
