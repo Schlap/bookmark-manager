@@ -1,5 +1,6 @@
 require 'data_mapper'
 require 'sinatra'
+require 'rack-flash'
 
 
 set :views, Proc.new { File.join(root, "..", "views") }
@@ -18,6 +19,7 @@ DataMapper.auto_upgrade!
 
 enable :sessions
 set :session_secret, 'super secret'
+use Rack::Flash
 
 get '/' do
 	@links = Link.all
@@ -43,6 +45,7 @@ get '/tags/:text' do
 end
 
 get '/users/new' do
+	@user = User.new
   # note the view is in views/users/new.erb
   # we need the quotes because otherwise
   # ruby would divide the symbol :users by the
@@ -51,11 +54,21 @@ get '/users/new' do
 end
 
 post '/users' do 
-	user = User.create(:email => params[:email],
+	@user = User.create(:email => params[:email],
 				:password => params[:password],
 				:password_confirmation => params[:password_confirmation])
-	session[:user_id] = user.id
-	redirect to('/')
+				#the user.id will be nil if the user wasn't saved
+				#becuase of password mismatch
+				 # let's try saving it
+  # if the model is valid,
+  # it will be saved
+				if @user.save
+					session[:user_id] = @user.id
+					redirect to ('/')
+				else
+					flash[:notice] = "Sorry, your passwords don't match!"
+					erb :"users/new"
+		end
 end
 
 helpers do 
@@ -65,7 +78,3 @@ helpers do
 	end
 
 end
-
-
-
-

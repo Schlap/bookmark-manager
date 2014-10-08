@@ -12,6 +12,7 @@ require 'database_cleaner'
 require 'capybara/rspec'
 require 'sinatra'
 require 'bcrypt'
+require 'rack-flash'
 Capybara.app = Sinatra::Application.new
 
 
