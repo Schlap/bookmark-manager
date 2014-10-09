@@ -12,8 +12,8 @@ task :auto_upgrade do
 end
 
 task :auto_migrate do
-	#to force he creation of all tables as they are
-	#describe in your models, even if this
+	#to force the creation of all tables as they are
+	#described in your models, even if this
 	#may lead to data loss, use auto_migrate:
 		DataMapper.auto_migrate!
 		puts "Auto-migrate complete (data could have been lost)"
